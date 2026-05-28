@@ -1,24 +1,24 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: taskflow-ingress
-  namespace: taskflow
+  name: taskforge-ingress
+  namespace: taskforge
 spec:
   rules:
-    - host: taskflow.local
+    - host: taskforge.local
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: taskflow-frontend
+                name: taskforge-frontend
                 port:
                   number: 80
           - path: /api
             pathType: Prefix
             backend:
               service:
-                name: taskflow-backend
+                name: taskforge-backend
                 port:
                   number: 8000

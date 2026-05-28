@@ -1,5 +1,5 @@
 variable "aws_region" {
-  description = "AWS region for the TaskFlow server."
+  description = "AWS region for the TaskForge server."
   type        = string
   default     = "ap-south-1"
 }
@@ -7,7 +7,7 @@ variable "aws_region" {
 variable "project_name" {
   description = "Name prefix for infrastructure resources."
   type        = string
-  default     = "taskflow"
+  default     = "taskforge"
 }
 
 variable "instance_type" {

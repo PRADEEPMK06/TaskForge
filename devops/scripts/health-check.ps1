@@ -1,11 +1,11 @@
 $ErrorActionPreference = "Stop"
 
-$Backend = $env:TASKFLOW_BACKEND_URL
+$Backend = $env:TASKFORGE_BACKEND_URL
 if (-not $Backend) {
     $Backend = "http://localhost:8000"
 }
 
-$Frontend = $env:TASKFLOW_FRONTEND_URL
+$Frontend = $env:TASKFORGE_FRONTEND_URL
 if (-not $Frontend) {
     $Frontend = "http://localhost:3000"
 }

@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: taskflow-frontend
-  namespace: taskflow
+  name: taskforge-frontend
+  namespace: taskforge
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: taskflow-frontend
+      app: taskforge-frontend
   template:
     metadata:
       labels:
-        app: taskflow-frontend
+        app: taskforge-frontend
     spec:
       containers:
         - name: frontend
-          image: YOUR_DOCKERHUB_USERNAME/taskflow-frontend:latest
+          image: YOUR_DOCKERHUB_USERNAME/taskforge-frontend:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 80

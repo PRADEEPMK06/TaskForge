@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: taskflow-backend-data
-  namespace: taskflow
+  name: taskforge-backend-data
+  namespace: taskforge
 spec:
   accessModes:
     - ReadWriteOnce

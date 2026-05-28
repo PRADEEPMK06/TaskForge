@@ -14,8 +14,8 @@ pipeline {
     }
 
     environment {
-        BACKEND_IMAGE = "${params.IMAGE_NAMESPACE}/taskflow-backend:${BUILD_NUMBER}"
-        FRONTEND_IMAGE = "${params.IMAGE_NAMESPACE}/taskflow-frontend:${BUILD_NUMBER}"
+        BACKEND_IMAGE = "${params.IMAGE_NAMESPACE}/taskforge-backend:${BUILD_NUMBER}"
+        FRONTEND_IMAGE = "${params.IMAGE_NAMESPACE}/taskforge-frontend:${BUILD_NUMBER}"
     }
 
     stages {

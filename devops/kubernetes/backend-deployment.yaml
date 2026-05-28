@@ -1,29 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: taskflow-backend
-  namespace: taskflow
+  name: taskforge-backend
+  namespace: taskforge
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: taskflow-backend
+      app: taskforge-backend
   template:
     metadata:
       labels:
-        app: taskflow-backend
+        app: taskforge-backend
     spec:
       containers:
         - name: backend
-          image: YOUR_DOCKERHUB_USERNAME/taskflow-backend:latest
+          image: YOUR_DOCKERHUB_USERNAME/taskforge-backend:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
           envFrom:
             - configMapRef:
-                name: taskflow-config
+                name: taskforge-config
             - secretRef:
-                name: taskflow-secret
+                name: taskforge-secret
           readinessProbe:
             httpGet:
               path: /health
@@ -37,10 +37,10 @@ spec:
             initialDelaySeconds: 20
             periodSeconds: 20
           volumeMounts:
-            - name: taskflow-data
+            - name: taskforge-data
               mountPath: /app/data
       volumes:
-        - name: taskflow-data
+        - name: taskforge-data
           persistentVolumeClaim:
-            claimName: taskflow-backend-data
+            claimName: taskforge-backend-data
 

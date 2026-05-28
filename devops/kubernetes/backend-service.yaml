@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: taskflow-backend
-  namespace: taskflow
+  name: taskforge-backend
+  namespace: taskforge
 spec:
   selector:
-    app: taskflow-backend
+    app: taskforge-backend
   ports:
     - name: http
       port: 8000

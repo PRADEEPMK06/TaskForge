@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: taskflow-config
-  namespace: taskflow
+  name: taskforge-config
+  namespace: taskforge
 data:
-  DATABASE_URL: "sqlite:///./data/taskflow.db"
+  DATABASE_URL: "sqlite:///./data/taskforge.db"
   ACCESS_TOKEN_EXPIRE_MINUTES: "720"
-  CORS_ORIGINS: "http://localhost:3000,http://taskflow.local"
+  CORS_ORIGINS: "http://localhost:3000,http://taskforge.local"
 

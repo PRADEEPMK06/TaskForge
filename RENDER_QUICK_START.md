@@ -133,6 +133,7 @@ Copy this value - you'll need it on Render.
 2. Look for "No such file or directory" errors
 3. Verify paths: should be `app/backend/...`
 4. Check `requirements.txt` for missing dependencies
+5. **If you see "pydantic-core" error**: See RENDER_BUILD_FIX.md (already fixed for you!)
 
 ### Frontend shows blank page
 1. Check browser console (F12)

@@ -33,6 +33,10 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
+    @application.get("/", tags=["system"])
+    def root() -> dict[str, str]:
+        return {"message": "TaskFlow API is running", "service": "taskflow-api"}
+
     @application.get("/health", tags=["system"])
     def health() -> dict[str, str]:
         return {"status": "ok", "service": "taskflow-api"}

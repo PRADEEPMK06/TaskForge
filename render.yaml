@@ -17,7 +17,7 @@ services:
       - key: ACCESS_TOKEN_EXPIRE_MINUTES
         value: "720"
       - key: CORS_ORIGINS
-        value: "https://taskflow-backend.onrender.com,https://taskflow-frontend.onrender.com"
+        value: "https://taskforge-backend-v3z4.onrender.com,https://taskforge-fontend.onrender.com"
 
   - type: static_site
     name: taskflow-frontend

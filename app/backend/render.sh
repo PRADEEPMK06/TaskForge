@@ -17,6 +17,7 @@ if [ -f "init_db.py" ]; then
 fi
 
 echo "Starting application..."
+execuvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}
 
 # Start the application
 exec uvicorn app.main:app --host 0.0.0.0 --port $PORT

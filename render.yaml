@@ -9,7 +9,7 @@ services:
     startCommand: "cd app/backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT"
     envVars:
       - key: PYTHONUNBUFFERED
-        value: 1
+        value: "1"
       - key: SECRET_KEY
         sync: false
       - key: DATABASE_URL
@@ -17,7 +17,7 @@ services:
       - key: ACCESS_TOKEN_EXPIRE_MINUTES
         value: "720"
       - key: CORS_ORIGINS
-        value: "http://localhost:3000,https://taskflow-frontend.onrender.com"
+        value: "https://taskflow-backend.onrender.com,https://taskflow-frontend.onrender.com"
 
   - type: static_site
     name: taskflow-frontend

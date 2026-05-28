@@ -1,0 +1,39 @@
+# render.yaml - Render Infrastructure as Code (Optional but recommended)
+
+services:
+  - type: web
+    name: taskflow-backend
+    runtime: python
+    runtimeVersion: 3.12.0
+    buildCommand: "pip install -r app/backend/requirements.txt"
+    startCommand: "cd app/backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: 1
+      - key: SECRET_KEY
+        sync: false
+      - key: DATABASE_URL
+        value: "sqlite:///./data/taskflow.db"
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "720"
+      - key: CORS_ORIGINS
+        value: "http://localhost:3000,https://taskflow-frontend.onrender.com"
+
+  - type: static_site
+    name: taskflow-frontend
+    staticPublishPath: ./app/frontend
+    buildCommand: "echo 'Static files ready for deployment'"
+    routes:
+      - path: /
+        target: index.html
+        isRegex: false
+      - path: /*
+        target: index.html
+        isRegex: true
+
+# Optional: PostgreSQL Database
+# databases:
+#   - name: taskflow-db
+#     databaseName: taskflow
+#     plan: free
+#     region: oregon

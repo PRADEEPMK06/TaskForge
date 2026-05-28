@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskFlow Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img src="tf.svg" alt="TaskFlow Logo" class="brand-logo">
+      <div>
+        <strong>TaskFlow</strong>
+        <span>Delivery board</span>
+      </div>
+    </div>
+
+    <div class="topbar-actions">
+      <div class="points-pill">
+        <span>Points</span>
+        <strong id="user-points">0</strong>
+      </div>
+      <button class="icon-button" id="settings-button" type="button" aria-label="Open settings">Settings</button>
+      <button class="ghost-button" id="logout-button" type="button">Logout</button>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section class="workspace-header">
+      <div>
+        <p class="eyebrow" id="welcome-label">Workspace</p>
+        <h1>Task execution board</h1>
+      </div>
+      <button class="primary-button" id="new-task-button" type="button">New task</button>
+    </section>
+
+    <section class="metrics-grid" aria-label="Task metrics">
+      <article class="metric-tile">
+        <span>Total</span>
+        <strong id="metric-total">0</strong>
+      </article>
+      <article class="metric-tile">
+        <span>In progress</span>
+        <strong id="metric-progress">0</strong>
+      </article>
+      <article class="metric-tile">
+        <span>Completed</span>
+        <strong id="metric-done">0</strong>
+      </article>
+      <article class="metric-tile">
+        <span>Completion</span>
+        <strong id="metric-rate">0%</strong>
+      </article>
+    </section>
+
+    <section class="board-toolbar" aria-label="Board filters">
+      <div class="segmented-control" id="status-filter">
+        <button class="active" type="button" data-status="all">All</button>
+        <button type="button" data-status="todo">To do</button>
+        <button type="button" data-status="in_progress">In progress</button>
+        <button type="button" data-status="done">Done</button>
+      </div>
+    </section>
+
+    <section class="board" id="task-board" aria-label="Task board">
+      <div class="column" data-status="todo">
+        <div class="column-header">
+          <h2>To do</h2>
+          <span id="count-todo">0</span>
+        </div>
+        <div class="task-list" id="todo-list" data-status="todo"></div>
+      </div>
+
+      <div class="column" data-status="in_progress">
+        <div class="column-header">
+          <h2>In progress</h2>
+          <span id="count-in-progress">0</span>
+        </div>
+        <div class="task-list" id="in-progress-list" data-status="in_progress"></div>
+      </div>
+
+      <div class="column" data-status="done">
+        <div class="column-header">
+          <h2>Done</h2>
+          <span id="count-done">0</span>
+        </div>
+        <div class="task-list" id="done-list" data-status="done"></div>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="modal" id="task-modal">
+    <form id="task-form" method="dialog" class="modal-panel">
+      <div class="modal-header">
+        <h2 id="task-modal-title">New task</h2>
+        <button class="icon-button" type="button" data-close-modal="task-modal" aria-label="Close task dialog">Close</button>
+      </div>
+
+      <input type="hidden" id="task-id">
+
+      <label>
+        Title
+        <input id="task-title" name="title" type="text" maxlength="120" required>
+      </label>
+
+      <label>
+        Description
+        <textarea id="task-description" name="description" rows="4" maxlength="1000"></textarea>
+      </label>
+
+      <div class="form-grid">
+        <label>
+          Status
+          <select id="task-status" name="status">
+            <option value="todo">To do</option>
+            <option value="in_progress">In progress</option>
+            <option value="done">Done</option>
+          </select>
+        </label>
+
+        <label>
+          Priority
+          <select id="task-priority" name="priority">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="form-grid">
+        <label>
+          Due date
+          <input id="task-due-date" name="due_date" type="datetime-local">
+        </label>
+
+        <label>
+          Reward
+          <input id="task-points" name="points_reward" type="number" min="1" max="100" value="10">
+        </label>
+      </div>
+
+      <div class="modal-actions">
+        <button class="ghost-button" type="button" data-close-modal="task-modal">Cancel</button>
+        <button class="primary-button" type="submit">Save task</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="modal" id="settings-modal">
+    <form id="settings-form" method="dialog" class="modal-panel compact">
+      <div class="modal-header">
+        <h2>Profile settings</h2>
+        <button class="icon-button" type="button" data-close-modal="settings-modal" aria-label="Close settings dialog">Close</button>
+      </div>
+
+      <label>
+        Accent color
+        <input id="theme-color" name="theme_color" type="color" value="#2563eb">
+      </label>
+
+      <label>
+        Display font
+        <select id="font-style" name="font_style">
+          <option value="Inter">Inter</option>
+          <option value="System">System</option>
+          <option value="Georgia">Georgia</option>
+          <option value="Courier New">Courier New</option>
+        </select>
+      </label>
+
+      <div class="modal-actions">
+        <button class="ghost-button" type="button" data-close-modal="settings-modal">Cancel</button>
+        <button class="primary-button" type="submit">Save settings</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="config.js"></script>
+  <script src="src/utils.js"></script>
+  <script src="src/api.js"></script>
+  <script src="src/dashboard.js"></script>
+</body>
+</html>

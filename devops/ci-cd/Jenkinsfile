@@ -1,0 +1,141 @@
+pipeline {
+    agent any
+
+    options {
+        timestamps()
+        disableConcurrentBuilds()
+    }
+
+    parameters {
+        string(name: 'IMAGE_NAMESPACE', defaultValue: 'your-dockerhub-username', description: 'Docker image namespace or registry account.')
+        booleanParam(name: 'PUSH_IMAGES', defaultValue: false, description: 'Push Docker images after build.')
+        booleanParam(name: 'RUN_TERRAFORM', defaultValue: false, description: 'Run Terraform apply for infrastructure.')
+        booleanParam(name: 'RUN_ANSIBLE', defaultValue: false, description: 'Run Ansible playbook for server configuration.')
+    }
+
+    environment {
+        BACKEND_IMAGE = "${params.IMAGE_NAMESPACE}/taskflow-backend:${BUILD_NUMBER}"
+        FRONTEND_IMAGE = "${params.IMAGE_NAMESPACE}/taskflow-frontend:${BUILD_NUMBER}"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Backend Unit Tests') {
+            steps {
+                dir('backend') {
+                    sh '''
+                        python -m pip install --upgrade pip
+                        python -m pip install -r requirements.txt
+                        mkdir -p reports
+                        python -m pytest --junitxml=reports/pytest.xml --cov=app --cov-report=xml:reports/coverage.xml
+                    '''
+                }
+            }
+            post {
+                always {
+                    junit allowEmptyResults: true, testResults: 'backend/reports/pytest.xml'
+                    archiveArtifacts allowEmptyArchive: true, artifacts: 'backend/reports/**'
+                }
+            }
+        }
+
+        stage('Frontend Unit Tests') {
+            steps {
+                dir('frontend') {
+                    sh '''
+                        npm ci || npm install
+                        npm test -- --coverage
+                    '''
+                }
+            }
+            post {
+                always {
+                    archiveArtifacts allowEmptyArchive: true, artifacts: 'frontend/coverage/**'
+                }
+            }
+        }
+
+        stage('Build Docker Images') {
+            steps {
+                sh '''
+                    docker build -f devops/build/dockerfiles/backend.Dockerfile -t ${BACKEND_IMAGE} .
+                    docker build -f devops/build/dockerfiles/frontend.Dockerfile -t ${FRONTEND_IMAGE} .
+                '''
+            }
+        }
+
+        stage('Push Docker Images') {
+            when {
+                expression { return params.PUSH_IMAGES }
+            }
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh '''
+                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                        docker push ${BACKEND_IMAGE}
+                        docker push ${FRONTEND_IMAGE}
+                    '''
+                }
+            }
+        }
+
+        stage('Terraform Validate') {
+            steps {
+                dir('devops/infra-build/terraform') {
+                    sh '''
+                        terraform init -backend=false
+                        terraform validate
+                    '''
+                }
+            }
+        }
+
+        stage('Terraform Apply') {
+            when {
+                expression { return params.RUN_TERRAFORM }
+            }
+            steps {
+                dir('devops/infra-build/terraform') {
+                    sh '''
+                        terraform init
+                        terraform apply -auto-approve
+                    '''
+                }
+            }
+        }
+
+        stage('Ansible Syntax Check') {
+            steps {
+                dir('devops/configure-infra/ansible') {
+                    sh 'ansible-playbook --syntax-check playbook.yml'
+                }
+            }
+        }
+
+        stage('Configure Server With Ansible') {
+            when {
+                expression { return params.RUN_ANSIBLE }
+            }
+            steps {
+                dir('devops/configure-infra/ansible') {
+                    sh 'ansible-playbook -i inventory.ini playbook.yml'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'TaskFlow pipeline completed successfully.'
+        }
+        failure {
+            echo 'TaskFlow pipeline failed. Check the stage logs and archived reports.'
+        }
+    }
+}
+

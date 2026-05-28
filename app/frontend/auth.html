@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskFlow Sign In</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="auth-page">
+  <main class="auth-shell">
+    <section class="auth-panel" aria-labelledby="auth-title">
+      <div class="brand auth-brand">
+        <img src="tf.svg" alt="TaskFlow Logo" class="brand-logo">
+        <div>
+          <strong>TaskFlow</strong>
+          <span>Project task manager</span>
+        </div>
+      </div>
+
+      <h1 id="auth-title">Welcome back</h1>
+
+      <div class="segmented-control full" id="auth-mode">
+        <button class="active" type="button" data-mode="login">Login</button>
+        <button type="button" data-mode="register">Register</button>
+      </div>
+
+      <form id="auth-form" class="auth-form">
+        <label>
+          Username
+          <input id="username" name="username" type="text" minlength="3" maxlength="50" autocomplete="username" required>
+        </label>
+
+        <label>
+          Password
+          <input id="password" name="password" type="password" minlength="8" maxlength="128" autocomplete="current-password" required>
+        </label>
+
+        <p class="form-message" id="auth-message" role="alert"></p>
+        <button class="primary-button wide" id="auth-submit" type="submit">Login</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="src/api.js"></script>
+  <script src="src/auth.js"></script>
+</body>
+</html>

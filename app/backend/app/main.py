@@ -21,7 +21,7 @@ def create_app() -> FastAPI:
     application = FastAPI(
         title=settings.project_name,
         version="1.0.0",
-        description="TaskFlow is a portfolio-ready task manager API with auth, task workflow, metrics, and DevOps support.",
+        description="TaskForge is a portfolio-ready task manager API with auth, task workflow, metrics, and DevOps support.",
         lifespan=lifespan,
     )
 
@@ -35,11 +35,11 @@ def create_app() -> FastAPI:
 
     @application.get("/", tags=["system"])
     def root() -> dict[str, str]:
-        return {"message": "TaskFlow API is running", "service": "taskflow-api"}
+        return {"message": "TaskForge API is running", "service": "taskforge-api"}
 
     @application.get("/health", tags=["system"])
     def health() -> dict[str, str]:
-        return {"status": "ok", "service": "taskflow-api"}
+        return {"status": "ok", "service": "taskforge-api"}
 
     @application.get("/metrics", response_class=PlainTextResponse, tags=["system"])
     def metrics(db: Session = Depends(get_db)) -> str:
@@ -48,15 +48,15 @@ def create_app() -> FastAPI:
         completed_count = db.query(Task).filter(Task.status == "done").count()
         return "\n".join(
             [
-                "# HELP taskflow_users_total Registered users.",
-                "# TYPE taskflow_users_total gauge",
-                f"taskflow_users_total {user_count}",
-                "# HELP taskflow_tasks_total Tasks created.",
-                "# TYPE taskflow_tasks_total gauge",
-                f"taskflow_tasks_total {task_count}",
-                "# HELP taskflow_tasks_completed_total Tasks completed.",
-                "# TYPE taskflow_tasks_completed_total gauge",
-                f"taskflow_tasks_completed_total {completed_count}",
+                "# HELP taskforge_users_total Registered users.",
+                "# TYPE taskforge_users_total gauge",
+                f"taskforge_users_total {user_count}",
+                "# HELP taskforge_tasks_total Tasks created.",
+                "# TYPE taskforge_tasks_total gauge",
+                f"taskforge_tasks_total {task_count}",
+                "# HELP taskforge_tasks_completed_total Tasks completed.",
+                "# TYPE taskforge_tasks_completed_total gauge",
+                f"taskforge_tasks_completed_total {completed_count}",
                 "",
             ]
         )

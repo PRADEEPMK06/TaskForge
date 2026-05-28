@@ -1,4 +1,4 @@
-(function attachTaskFlowApi(globalScope) {
+(function attachTaskForgeApi(globalScope) {
   // Get API base URL - will be set by config.js or use fallback
   function getDefaultApiUrl() {
     if (globalScope.window?.location?.hostname?.includes('onrender.com')) {
@@ -9,9 +9,9 @@
 
   const DEFAULT_API_BASE_URL = getDefaultApiUrl();
   const STORAGE_KEYS = {
-    token: "taskflow_token",
-    user: "taskflow_user",
-    apiUrl: "taskflow_api_url",
+    token: "taskforge_token",
+    user: "taskforge_user",
+    apiUrl: "taskforge_api_url",
   };
 
   class ApiError extends Error {
@@ -25,7 +25,7 @@
 
   function getApiBaseUrl() {
     const configuredUrl =
-      globalScope.TASKFLOW_API_URL ||
+      globalScope.TASKFORGE_API_URL ||
       globalScope.localStorage?.getItem(STORAGE_KEYS.apiUrl) ||
       DEFAULT_API_BASE_URL;
     return configuredUrl.replace(/\/$/, "");
@@ -125,7 +125,7 @@
     },
   };
 
-  globalScope.TaskFlowApi = api;
+  globalScope.TaskForgeApi = api;
   if (typeof module !== "undefined") {
     module.exports = api;
   }

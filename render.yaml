@@ -2,7 +2,7 @@
 
 services:
   - type: web
-    name: taskflow-backend
+    name: taskforge-backend
     runtime: python
     runtimeVersion: 3.12.0
     buildCommand: "pip install -r app/backend/requirements.txt"
@@ -13,14 +13,14 @@ services:
       - key: SECRET_KEY
         sync: false
       - key: DATABASE_URL
-        value: "sqlite:///./data/taskflow.db"
+        value: "sqlite:///./data/taskforge.db"
       - key: ACCESS_TOKEN_EXPIRE_MINUTES
         value: "720"
       - key: CORS_ORIGINS
         value: "https://taskforge-backend-v3z4.onrender.com,https://taskforge-fontend.onrender.com"
 
   - type: static_site
-    name: taskflow-frontend
+    name: taskforge-frontend
     staticPublishPath: ./app/frontend
     buildCommand: "echo 'Static files ready for deployment'"
     routes:

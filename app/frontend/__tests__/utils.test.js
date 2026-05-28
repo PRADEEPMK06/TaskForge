@@ -1,6 +1,6 @@
 const utils = require("../src/utils");
 
-describe("TaskFlow utility helpers", () => {
+describe("TaskForge utility helpers", () => {
   test("escapes HTML entities", () => {
     expect(utils.escapeHtml('<script>alert("x")</script>')).toBe(
       "&lt;script&gt;alert(&quot;x&quot;)&lt;/script&gt;",

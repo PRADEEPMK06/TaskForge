@@ -1,4 +1,4 @@
-(function attachTaskFlowUtils(globalScope) {
+(function attachTaskForgeUtils(globalScope) {
   const statusLabels = {
     todo: "To do",
     in_progress: "In progress",
@@ -68,7 +68,7 @@
     toDateTimeLocal,
   };
 
-  globalScope.TaskFlowUtils = utils;
+  globalScope.TaskForgeUtils = utils;
   if (typeof module !== "undefined") {
     module.exports = utils;
   }

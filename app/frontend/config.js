@@ -1,8 +1,8 @@
 // Detect API URL based on environment
 function getApiUrl() {
   // If already set globally, use it
-  if (window.TASKFLOW_API_URL) {
-    return window.TASKFLOW_API_URL;
+  if (window.TASKFORGE_API_URL) {
+    return window.TASKFORGE_API_URL;
   }
   
   // Production on Render
@@ -21,5 +21,5 @@ function getApiUrl() {
   return `${protocol}//${hostname}/api/v1`;
 }
 
-window.TASKFLOW_API_URL = getApiUrl();
+window.TASKFORGE_API_URL = getApiUrl();
 

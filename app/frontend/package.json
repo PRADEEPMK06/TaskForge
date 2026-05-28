@@ -1,7 +1,7 @@
 {
-  "name": "taskflow-frontend",
+  "name": "taskforge-frontend",
   "version": "1.0.0",
-  "description": "Static dashboard frontend for the TaskFlow DevOps portfolio project.",
+  "description": "Static dashboard frontend for the TaskForge DevOps portfolio project.",
   "main": "src/dashboard.js",
   "scripts": {
     "test": "jest --coverage --runInBand",

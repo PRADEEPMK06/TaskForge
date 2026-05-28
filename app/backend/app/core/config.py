@@ -3,9 +3,9 @@ from functools import lru_cache
 
 
 class Settings:
-    project_name = "TaskFlow API"
+    project_name = "TaskForge API"
     api_prefix = "/api/v1"
-    database_url = os.getenv("DATABASE_URL", "sqlite:///./data/taskflow.db")
+    database_url = os.getenv("DATABASE_URL", "sqlite:///./data/taskforge.db")
     secret_key = os.getenv("SECRET_KEY", "change-this-secret-key-before-production")
     access_token_expire_minutes = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "720"))
     cors_origins = [

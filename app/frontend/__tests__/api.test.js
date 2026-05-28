@@ -10,13 +10,13 @@ function jsonResponse(payload, ok = true, status = 200) {
   };
 }
 
-describe("TaskFlow API client", () => {
+describe("TaskForge API client", () => {
   test("uses the default API base URL", () => {
     expect(api.getApiBaseUrl()).toBe("http://localhost:8000/api/v1");
   });
 
   test("uses configured API base URL without a trailing slash", () => {
-    window.TASKFLOW_API_URL = "http://api.example.com/api/v1/";
+    window.TASKFORGE_API_URL = "http://api.example.com/api/v1/";
     expect(api.getApiBaseUrl()).toBe("http://api.example.com/api/v1");
   });
 

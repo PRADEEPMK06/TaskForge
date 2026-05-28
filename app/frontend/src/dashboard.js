@@ -1,6 +1,6 @@
 (function attachDashboard(globalScope) {
-  const api = globalScope.TaskFlowApi;
-  const utils = globalScope.TaskFlowUtils;
+  const api = globalScope.TaskForgeApi;
+  const utils = globalScope.TaskForgeUtils;
 
   const state = {
     tasks: [],

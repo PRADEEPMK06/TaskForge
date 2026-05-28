@@ -1,5 +1,5 @@
 (function attachAuthPage(globalScope) {
-  const api = globalScope.TaskFlowApi;
+  const api = globalScope.TaskForgeApi;
   let mode = "login";
 
   function setMode(nextMode) {

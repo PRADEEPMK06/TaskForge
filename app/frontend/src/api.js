@@ -1,5 +1,13 @@
 (function attachTaskFlowApi(globalScope) {
-  const DEFAULT_API_BASE_URL = "http://localhost:8000/api/v1";
+  // Get API base URL - will be set by config.js or use fallback
+  function getDefaultApiUrl() {
+    if (globalScope.window?.location?.hostname?.includes('onrender.com')) {
+      return 'https://taskflow-backend.onrender.com/api/v1';
+    }
+    return 'http://localhost:8000/api/v1';
+  }
+
+  const DEFAULT_API_BASE_URL = getDefaultApiUrl();
   const STORAGE_KEYS = {
     token: "taskflow_token",
     user: "taskflow_user",

@@ -7,7 +7,7 @@ function getApiUrl() {
   
   // Production on Render
   if (window.location.hostname.includes('onrender.com')) {
-    return 'https://taskflow-backend.onrender.com/api/v1';
+    return 'https://taskforge-backend-v3z4.onrender.com/api/v1';
   }
   
   // Local development

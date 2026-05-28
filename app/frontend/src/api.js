@@ -2,7 +2,7 @@
   // Get API base URL - will be set by config.js or use fallback
   function getDefaultApiUrl() {
     if (globalScope.window?.location?.hostname?.includes('onrender.com')) {
-      return 'https://taskflow-backend.onrender.com/api/v1';
+      return 'https://taskforge-backend-v3z4.onrender.com/api/v1';
     }
     return 'http://localhost:8000/api/v1';
   }
